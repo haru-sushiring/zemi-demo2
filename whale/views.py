@@ -35,14 +35,12 @@ def main(self):
 	t_end = time.time() + 60 * 62
 	while time.time() < t_end:
 
-	  time.sleep(10)
 	  unix_timestamp = tsc.return_old_time_stamp()
 	  print('古いタイムスタンプを利用 : ' + str(unix_timestamp))
 	  new_btc_json = return_api_json(unix_timestamp)
 
 	  json_error_count = 0
 	  while (new_btc_json == 'False'):
-	    time.sleep(10)
 	    new_btc_json = return_api_json(unix_timestamp)
 	    json_error_count += 1
 	    if (json_error_count == 5):
@@ -62,7 +60,6 @@ def main(self):
 	  btc_transactions_count = new_btc_json['count']
 	  print('count : ' + str(btc_transactions_count))
 	  while (btc_transactions_count == 0):
-	    time.sleep(10)
 	    new_btc_json = return_api_json(unix_timestamp)
 	    if (new_btc_json['result'] == 'error'):
 	      	new_btc_json = return_api_json(unix_timestamp)
