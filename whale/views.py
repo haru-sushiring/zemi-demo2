@@ -52,10 +52,11 @@ def main(self):
 
 	  json_result = new_btc_json['result']
 	  while (json_result == 'error'):
-	    print(new_btc_json['message'])
-	    if (new_btc_json['message'] == 'usage limit reached'):
-	    	time.sleep(20)
-	    new_btc_json = return_api_json(unix_timestamp)
+	  	time.sleep(20)
+	  	if (new_btc_json['message'] == 'usage limit reached'):
+	  		print(new_btc_json['message'])
+	  		time.sleep(20)
+	  	new_btc_json = return_api_json(unix_timestamp)
 
 	  btc_transactions_count = new_btc_json['count']
 	  print('count : ' + str(btc_transactions_count))
@@ -131,7 +132,7 @@ def return_api_json(unix_timestamp):
         }
 
     try:
-    	time.sleep(10)
+    	time.sleep(15)
     	r = requests.get(api_url, params=payload)
     	new_btc_json = r.json()
     except r.JSONDecodeError:
