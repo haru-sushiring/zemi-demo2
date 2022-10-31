@@ -164,20 +164,22 @@ class RegisterDBClass:
 	def db_register_buy(self, timestamp, btc_amount):
 		amount = btc_amount
 		judge = 'buy'
+		print(timestamp)
 		with psycopg2.connect(self.DATABASES_URL) as conn:
 			with conn.cursor() as curs:
 				curs.execute(
-					"INSERT INTO whale(timestamp,amount,judge) VALUES(%s, %s, %s)", (timestamp, amount, judge))
+					"INSERT INTO whale(timestamp,amount,judge) VALUES(timezone('JST' ,%s), %s, %s)", (timestamp, amount, judge))
 
 		print('db登録しました buy')
 
 	def db_register_sell(self, timestamp, btc_amount):
 		amount = btc_amount
 		judge = 'sell'
+		print(timestamp)
 		with psycopg2.connect(self.DATABASES_URL) as conn:
 			with conn.cursor() as curs:
 				curs.execute(
-					"INSERT INTO whale(timestamp,amount,judge) VALUES(%s, %s, %s)", (timestamp, amount, judge))
+					"INSERT INTO whale(timestamp,amount,judge) VALUES(timezone('JST' ,%s), %s, %s)", (timestamp, amount, judge))
 
 		print('db登録しました sell')
 
