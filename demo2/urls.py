@@ -20,7 +20,8 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.Index.as_view(), name='Index'),
+    # path('', views.index, name='index'),
     path('whale/', include('whale.urls')),
     path('admin/', admin.site.urls),
     ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
