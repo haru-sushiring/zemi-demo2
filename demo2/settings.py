@@ -16,9 +16,6 @@ import os
 from os.path import join, dirname
 from dotenv import load_dotenv
 
-# 追加
-from .setting_common import *
-
 # db情報の読み込み
 load_dotenv(verbose=True)
 dotenv_path = join(dirname(__file__), '.env')
