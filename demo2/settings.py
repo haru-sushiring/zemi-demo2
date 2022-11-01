@@ -17,11 +17,11 @@ from os.path import join, dirname
 from dotenv import load_dotenv
 
 # db情報の読み込み
-load_dotenv(verbose=True)
+# load_dotenv(verbose=True)
 
-dotenv_path = join(dirname(__file__), '.env')
-load_dotenv(dotenv_path)
-# load_dotenv()
+# dotenv_path = join(dirname(__file__), '.env')
+# load_dotenv(dotenv_path)
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +31,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
