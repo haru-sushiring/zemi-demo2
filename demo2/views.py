@@ -27,6 +27,7 @@ class Index(TemplateView):
 		qs = models.Whale.objects.all()
 		x  = [x.timestamp for x in qs]
 		y  = [y.amount for y in qs]
+		z  = [z.price for z in qs]
 		char = graph.Plot_Graph(x,y)
 
 		context = super().get_context_data(**kwargs)
