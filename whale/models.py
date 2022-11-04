@@ -12,6 +12,7 @@ class Whale(models.Model):
     # id = models.AutoField()
     timestamp = models.DateTimeField()
     amount = models.FloatField()
+    price = models.FloatField()
     judge = models.CharField(max_length=4)
 
     class Meta:
