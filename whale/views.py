@@ -22,7 +22,7 @@ def main(self):
     tsc = TimeStampClass()
     rdbc = RegisterDBClass()
 
-    unix_timestamp = '1669965730'
+    unix_timestamp = '1669978044'
     # unix_timestamp = tsc.new_time_stamp()
     tsc.register_time_stamp(unix_timestamp)
     print(unix_timestamp)

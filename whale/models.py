@@ -18,3 +18,12 @@ class Whale(models.Model):
     class Meta:
         managed = False
         db_table = 'whale'
+
+
+class EX(models.Model):
+    address = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'exchange_adress_tabel'
