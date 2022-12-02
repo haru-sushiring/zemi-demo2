@@ -236,11 +236,11 @@ class RegisterDBClass:
         self.db_register(timestamp, sum_buy_btc_amount, btc_jpy_price, 'buy')
         self.db_register(timestamp, sum_sell_btc_amount, btc_jpy_price, 'sell')
 
-    def exchangefloor_db(self, ex_address, ex_name):
+    def exchangefloor_db(self, address, name):
         with psycopg2.connect(self.EX_DATABASE_URL) as conn:
             with conn.cursor() as curs:
                 curs.execute(
-                    "INSERT INTO exchange_adress_tabel(ex_address,ex_name) VALUES(%s, %s)", (ex_address, ex_name))
+                    "INSERT INTO exchange_adress_tabel(address,name) VALUES(%s, %s)", (ex_address, ex_name))
 
         print('db登録しました ' + ex_address)
 
