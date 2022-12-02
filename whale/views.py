@@ -22,8 +22,8 @@ def main(self):
     tsc = TimeStampClass()
     rdbc = RegisterDBClass()
 
-    # unix_timestamp = '1667000172'
-    unix_timestamp = tsc.new_time_stamp()
+    unix_timestamp = '1669965730'
+    # unix_timestamp = tsc.new_time_stamp()
     tsc.register_time_stamp(unix_timestamp)
     print(unix_timestamp)
 
@@ -88,8 +88,8 @@ def main(self):
             timestamp = tsc.exchange_time_stamp(new_time_stamp) # タイムスタンプを日本時間に直す
             btc_jpy_price = api.return_btc_jpy_price() # BTCの価格を取得する
 
-        # 一つ前のタイムスタンプが、今配列から取り出したトランザクションのタイムスタンプと違う場合、db登録し、処理終了
-        if (tsc.return_old_time_stamp() != new_time_stamp):
+        # 一つ前のタイムスタンプが、今配列から取り出したトランザクションのタイムスタンプと違う場合、db登録し、処理終了。ただし、amountがbuy,sell両方0の場合、db登録しない
+        if (tsc.return_old_time_stamp() != new_time_stamp and (sum_buy_btc_amount > 0 or sum_sell_btc_amount > 0)):
             #1つ前のタイムスタンプを利用して新しいjsonデータを取得するために、関数に登録しておく
             # tsc.register_time_stamp(old_time_stamp)
 
