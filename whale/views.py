@@ -122,8 +122,8 @@ def main(self):
             #取引所のアドレスと取引所名をdbに登録
             rdbc.exchangefloor_db(to_address, to_owner)
 
-        # 配列の要素が最後の場合（配列の中身がすべて同じタイムスタンプだった場合）db登録
-        if (transaction == transactions_list[-1]):
+        # 配列の要素が最後の場合（配列の中身がすべて同じタイムスタンプだった場合）db登録。。ただし、amountがbuy,sell両方0の場合、db登録しない
+        if (transaction == transactions_list[-1] and (sum_buy_btc_amount > 0 or sum_sell_btc_amount > 0)):
             rdbc.set_db(timestamp, btc_jpy_price, sum_buy_btc_amount, sum_sell_btc_amount)
             break
 
