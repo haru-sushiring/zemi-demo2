@@ -243,7 +243,7 @@ class RegisterDBClass:
                 curs.execute(
                     "INSERT INTO exchange_adress_tabel(address,name) VALUES(%s, %s)", (address, name))
 
-        print('db登録しました ' + ex_address)
+        print('db登録しました ' + address)
 
 
 ###
