@@ -98,17 +98,25 @@ def main(self):
             break
 
 
-        btc_id = transaction['id']
-        btc_from = transaction['from']['owner_type']
-        btc_to = transaction['to']['owner_type']
+        # btc_id = transaction['id']
+        from_owner = transaction['from']['owner']
+        from_owner_type = transaction['from']['owner_type']
+        from_address = transaction['from']['address']
+        to_owner = transaction['to']['owner']
+        to_owner_type = transaction['to']['owner_type']
+        to_address = transaction['to']['address']
         btc_amount = transaction['amount']
 
-        if (btc_from == 'exchange' and btc_to == 'unknown'):
+        #取引所のアドレスと取引所名をdbに登録
+        rdbc.exchangefloor_db(from_address, from_owner)
+        rdbc.exchangefloor_db(to_address, to_owner)
+
+        if (from_owner_type == 'exchange' and to_owner_type == 'unknown'):
             alert_class.buy_alert(btc_amount)
             sum_buy_btc_amount += btc_amount
             print(sum_buy_btc_amount)
 
-        if (btc_from == 'unknown' and btc_to == 'exchange'):
+        if (from_owner_type == 'unknown' and to_owner_type == 'exchange'):
             alert_class.sell_alert(btc_amount)
             sum_sell_btc_amount += btc_amount
             print(sum_sell_btc_amount)
@@ -213,10 +221,11 @@ class AlertClass:
 ###
 class RegisterDBClass:
     def __init__(self):
-        self.DATABASES_URL = os.environ['DATABASE_URL']
+        self.Whale_DATABASE_URL = os.environ['Whale_DATABASE_URL']
+        self.EX_DATABASE_URL = os.environ['EX_DATABASE_URL']
 
     def db_register(self, timestamp, amount, price, move):
-        with psycopg2.connect(self.DATABASES_URL) as conn:
+        with psycopg2.connect(self.Whale_DATABASE_URL) as conn:
             with conn.cursor() as curs:
                 curs.execute(
                     "INSERT INTO whale(timestamp,amount,price,move) VALUES(timezone('JST' ,%s), %s, %s, %s)", (timestamp, amount, price, move))
@@ -226,6 +235,14 @@ class RegisterDBClass:
     def set_db(self, timestamp, btc_jpy_price, sum_buy_btc_amount, sum_sell_btc_amount):
         self.db_register(timestamp, sum_buy_btc_amount, btc_jpy_price, 'buy')
         self.db_register(timestamp, sum_sell_btc_amount, btc_jpy_price, 'sell')
+
+    def exchangefloor_db(self, ex_address, ex_name):
+        with psycopg2.connect(self.EX_DATABASE_URL) as conn:
+            with conn.cursor() as curs:
+                curs.execute(
+                    "INSERT INTO exchange_adress_tabel(ex_address,ex_name) VALUES(%s, %s)", (ex_address, ex_name))
+
+        print('db登録しました ' + ex_address)
 
 
 ###
