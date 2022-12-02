@@ -107,19 +107,20 @@ def main(self):
         to_address = transaction['to']['address']
         btc_amount = transaction['amount']
 
-        #取引所のアドレスと取引所名をdbに登録
-        rdbc.exchangefloor_db(from_address, from_owner)
-        rdbc.exchangefloor_db(to_address, to_owner)
 
         if (from_owner_type == 'exchange' and to_owner_type == 'unknown'):
             alert_class.buy_alert(btc_amount)
             sum_buy_btc_amount += btc_amount
             print(sum_buy_btc_amount)
+            #取引所のアドレスと取引所名をdbに登録
+            rdbc.exchangefloor_db(from_address, from_owner)
 
         if (from_owner_type == 'unknown' and to_owner_type == 'exchange'):
             alert_class.sell_alert(btc_amount)
             sum_sell_btc_amount += btc_amount
             print(sum_sell_btc_amount)
+            #取引所のアドレスと取引所名をdbに登録
+            rdbc.exchangefloor_db(to_address, to_owner)
 
         # 配列の要素が最後の場合（配列の中身がすべて同じタイムスタンプだった場合）db登録
         if (transaction == transactions_list[-1]):
@@ -240,7 +241,7 @@ class RegisterDBClass:
         with psycopg2.connect(self.EX_DATABASE_URL) as conn:
             with conn.cursor() as curs:
                 curs.execute(
-                    "INSERT INTO exchange_adress_tabel(address,name) VALUES(%s, %s)", (ex_address, ex_name))
+                    "INSERT INTO exchange_adress_tabel(address,name) VALUES(%s, %s)", (address, name))
 
         print('db登録しました ' + ex_address)
 
